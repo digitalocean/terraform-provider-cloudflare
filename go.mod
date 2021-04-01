@@ -11,3 +11,5 @@ require (
 	golang.org/x/text v0.3.5 // indirect
 	golang.org/x/time v0.0.0-20210220033141-f8bda1e9f3ba // indirect
 )
+
+replace github.com/cloudflare/cloudflare-go => github.com/digitalocean/cloudflare-go v0.14.1-0.20210401225127-b5f9ca00b671

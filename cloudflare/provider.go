@@ -6,14 +6,15 @@ import (
 	"os"
 	"regexp"
 
-	cloudflare "github.com/cloudflare/cloudflare-go"
-	"github.com/cloudflare/terraform-provider-cloudflare/version"
-	cleanhttp "github.com/hashicorp/go-cleanhttp"
+	"github.com/cloudflare/cloudflare-go"
+	"github.com/hashicorp/go-cleanhttp"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/logging"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 	"github.com/hashicorp/terraform-plugin-sdk/httpclient"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+
+	"github.com/cloudflare/terraform-provider-cloudflare/version"
 )
 
 // Provider returns a terraform.ResourceProvider.
@@ -152,6 +153,7 @@ func Provider() terraform.ResourceProvider {
 			"cloudflare_zone_settings_override":                 resourceCloudflareZoneSettingsOverride(),
 			"cloudflare_zone":                                   resourceCloudflareZone(),
 			"cloudflare_zone_dnssec":                            resourceCloudflareZoneDNSSEC(),
+			"cloudflare_virtual_dns":                            resourceCloudflareVirtualDNS(),
 		},
 	}
 
