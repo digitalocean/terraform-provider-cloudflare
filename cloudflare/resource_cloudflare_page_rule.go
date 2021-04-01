@@ -581,7 +581,8 @@ func resourceCloudflarePageRuleRead(d *schema.ResourceData, meta interface{}) er
 	for _, pageRuleAction := range pageRule.Actions {
 		key, value, err := transformFromCloudflarePageRuleAction(&pageRuleAction)
 		if err != nil {
-			return fmt.Errorf("Failed to parse page rule action: %s", err)
+			log.Printf("[WARN] %v", err)
+			continue
 		}
 		actions[key] = value
 	}
