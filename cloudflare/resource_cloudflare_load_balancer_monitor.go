@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"strings"
-
 	"time"
 
 	"github.com/cloudflare/cloudflare-go"
@@ -110,23 +109,7 @@ func resourceCloudflareLoadBalancerMonitor() *schema.Resource {
 			"header": {
 				Type:     schema.TypeSet,
 				Optional: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"header": {
-							Type:     schema.TypeString,
-							Required: true,
-						},
-
-						"values": {
-							Type:     schema.TypeSet,
-							Required: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-					},
-				},
-				Set: HashByMapKey("header"),
+				Elem:     monitorHeaderElem,
 			},
 
 			"path": {
@@ -141,6 +124,23 @@ func resourceCloudflareLoadBalancerMonitor() *schema.Resource {
 			},
 		},
 	}
+}
+
+var monitorHeaderElem = &schema.Resource{
+	Schema: map[string]*schema.Schema{
+		"header": {
+			Type:     schema.TypeString,
+			Required: true,
+		},
+
+		"values": {
+			Type:     schema.TypeSet,
+			Required: true,
+			Elem: &schema.Schema{
+				Type: schema.TypeString,
+			},
+		},
+	},
 }
 
 func resourceCloudflareLoadBalancerPoolMonitorCreate(d *schema.ResourceData, meta interface{}) error {
@@ -370,7 +370,7 @@ func flattenLoadBalancerMonitorHeader(header map[string][]string) *schema.Set {
 		}
 		flattened = append(flattened, cfg)
 	}
-	return schema.NewSet(HashByMapKey("header"), flattened)
+	return schema.NewSet(schema.HashResource(monitorHeaderElem), flattened)
 }
 
 func resourceCloudflareLoadBalancerPoolMonitorDelete(d *schema.ResourceData, meta interface{}) error {
