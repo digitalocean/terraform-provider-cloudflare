@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # we only run on a linux docker container
 # we pretend to be v2.19.2 to make terraform happy with our fork
